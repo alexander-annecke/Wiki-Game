@@ -1,4 +1,7 @@
 
+from gameplay import play_round
+from storage.game_logic import check_answer
+
 def show_instructions():
     """Displays the game instructions."""
     pass
@@ -6,17 +9,41 @@ def show_instructions():
 
 def show_categories():
     """Displays the available game categories."""
-    pass
+    categories = [
+        "European capitals",
+    ]
+
+    print("\nAvailable game categories:")
+
+    for number, category in enumerate(categories, start=1):
+        print(f"{number}. {category}")
 
 
 def select_category():
     """Allows the player to select a game category."""
-    pass
+    categories = ["European capitals"]
+
+    while True:
+        show_categories()
+        choice = input("Please select a category (enter 1): ")
+
+        if choice == "1":
+            return categories[0]
+
+        print("Invalid selection. Please try again.")
 
 
 def start_game():
     """Starts a round of the game."""
-    pass
+    category = select_category()
+
+    if category is None:
+        return
+
+    print(f"\nStarting a new game in the category: {category}")
+    print("Try to guess the correct answer.")
+
+    play_round()
 
 
 def get_random_sentence(category):
@@ -34,11 +61,6 @@ def get_user_input():
     pass
 
 
-def check_answer(user_input, correct_answer):
-    """Checks the player's answer."""
-    pass
-
-
 def evaluate_game():
     """Evaluates the game result."""
     pass
@@ -46,14 +68,28 @@ def evaluate_game():
 
 def ask_to_continue():
     """Asks whether the player wants to continue playing."""
-    pass
+    while True:
+        choice = input("Would you like to play again? (y/n): ")
+        choice = choice.strip().lower()
+
+        if choice == "y":
+            return True
+        elif choice == "n":
+            return False
+
+        print("Invalid input. Please enter 'y' or 'n'.")
 
 
 def main():
     """Controls the main game flow."""
     print("Welcome to Wiki-Game!")
 
-    # The game flow will be implemented here later.
+    while True:
+        start_game()
+
+        if not ask_to_continue():
+            print("Thanks for playing Wiki-Game!")
+            break
 
 
 if __name__ == "__main__":
