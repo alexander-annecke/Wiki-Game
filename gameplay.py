@@ -1,14 +1,27 @@
 import wikipediaapi
 import random
 
+capitals = [
+    "Berlin",
+    "Paris",
+    "Rome",
+    "Madrid",
+    "Lisbon",
+    "Vienna",
+    "Brussels",
+    "Prague",
+    "Copenhagen",
+    "Stockholm"
+]
+
 wiki_wiki = wikipediaapi.Wikipedia(
     user_agent="CapitalQuiz/1.0 (annecke@gmail.com)",
     language="en"
 )
+correct_answer = random.choice(capitals)
 
-page_py = wiki_wiki.page("Berlin")
+page_py = wiki_wiki.page(correct_answer)
 
-correct_answer = "Berlin"
 
 complete_content = page_py.text
 list_of_sentences = complete_content.split(".")
