@@ -2,16 +2,33 @@ import wikipediaapi
 import random
 
 capitals = [
+    "Amsterdam",
+    "Athens",
     "Berlin",
-    "Paris",
-    "Rome",
-    "Madrid",
-    "Lisbon",
-    "Vienna",
+    "Bratislava",
     "Brussels",
-    "Prague",
+    "Bucharest",
+    "Budapest",
     "Copenhagen",
-    "Stockholm"
+    "Dublin",
+    "Helsinki",
+    "Lisbon",
+    "Ljubljana",
+    "Luxembourg",
+    "Madrid",
+    "Nikosia",
+    "Paris",
+    "Prague",
+    "Riga",
+    "Rome",
+    "Sofia",
+    "Stockholm",
+    "Tallinn",
+    "Valetta",
+    "Vienna",
+    "Vilnius",
+    "Warsaw",
+    "Zagreb"
 ]
 
 wiki_wiki = wikipediaapi.Wikipedia(
