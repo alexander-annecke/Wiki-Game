@@ -43,22 +43,25 @@ wiki_wiki = wikipediaapi.Wikipedia(
 
 def redact_city(sentence, city):
     pattern = r"\b" + re.escape(city) + r"\w*"
-    return re.sub(pattern, "️🏘️", sentence, flags=re.IGNORECASE)
+    return re.sub(pattern, "️XXX️", sentence, flags=re.IGNORECASE)
 
 correct_answer = random.choice(capitals)
 
 page_py = wiki_wiki.page(correct_answer)
 
 complete_content = page_py.text
-list_of_sentences = complete_content.split(".")
+list_of_sentences = complete_content.split(". ")
+list_of_sentences = [s.strip() for s in list_of_sentences if len(s.strip()) > 40]
 first_random_sentence = random.choice(list_of_sentences)
 first_redacted_sentence = redact_city(first_random_sentence, correct_answer)
 
+print("Welcome to CAPITAL CLUES!\n")
+
 print("Here comes the first clue:")
-print(first_redacted_sentence)
+print(f'"{first_redacted_sentence}"')
 
 while True:
-    guess = input("Which capital are we looking for? ")
+    guess = input("\nWhich capital are we looking for? ")
     more_random_sentences = random.choice(list_of_sentences)
     more_redacted_sentences = redact_city(more_random_sentences, correct_answer)
 
@@ -66,8 +69,8 @@ while True:
         print("Correct!")
         break
     else:
-        print("Wrong! Here comes another clue:")
-        print(more_redacted_sentences)
+        print("\nWrong! Here comes another clue:")
+        print(f'"{more_redacted_sentences}"')
 
 # def main():
 #    if __name__ == "__main__":
