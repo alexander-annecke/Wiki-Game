@@ -25,26 +25,29 @@ capitals = [
     "Sofia",
     "Stockholm",
     "Tallinn",
-    "Valetta",
+    "Valletta",
     "Vienna",
     "Vilnius",
     "Warsaw",
     "Zagreb"
 ]
 
+
+
 wiki_wiki = wikipediaapi.Wikipedia(
     user_agent="CapitalQuiz/1.0 (annecke@gmail.com)",
     language="en"
 )
 
+
+
 def redact_city(sentence, city):
-    pattern = r"\b" + re.escape(city) + r"\b"
-    return re.sub(pattern, "██████", sentence, flags=re.IGNORECASE)
+    pattern = r"\b" + re.escape(city) + r"\w*"
+    return re.sub(pattern, "️🏘️", sentence, flags=re.IGNORECASE)
 
 correct_answer = random.choice(capitals)
 
 page_py = wiki_wiki.page(correct_answer)
-
 
 complete_content = page_py.text
 list_of_sentences = complete_content.split(".")
@@ -65,3 +68,7 @@ while True:
     else:
         print("Wrong! Here comes another clue:")
         print(more_redacted_sentences)
+
+# def main():
+#    if __name__ == "__main__":
+#     main()
