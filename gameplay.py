@@ -70,7 +70,6 @@ def play_game():
     correct_answer = random.choice(CAPITALS)
     clues = get_clues(correct_answer, wiki)
 
-    print("Welcome to CAPITAL CLUES!\n")
     print("Here comes the first clue:")
 
     first_clue = redact_city(random.choice(clues), correct_answer)
@@ -87,6 +86,12 @@ def play_game():
         next_clue = redact_city(random.choice(clues), correct_answer)
         print(f'"{next_clue}"')
 
+# def menu():
+#     print("\nWelcome to CAPITAL CLUES!\n")
+#     print("1. English\n2. Deutsch")
+#     language_selected = input("Please select a language: ")
+
+    play_game()
 
 def main():
     play_game()
