@@ -37,6 +37,9 @@ wiki_wiki = wikipediaapi.Wikipedia(
     language="en"
 )
 
+def categories():
+    pass
+
 def redact_city(sentence, city):
     pattern = r"\b" + re.escape(city) + r"\b"
     return re.sub(pattern, "██████", sentence, flags=re.IGNORECASE)
