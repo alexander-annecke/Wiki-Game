@@ -5,6 +5,43 @@ import re
 from storage.game_logic import check_answer
 
 
+def welcome_message():
+    print("\nWelcome to the Wikipedia Guessing Game!")
+    print("Choose a category and guess the correct answer.")
+    print("Good luck!")
+
+
+def instructions():
+    print("\nHow to play:")
+    print("1. Choose a category.")
+    print("2. Read the sentences from the Wikipedia article sentences.")
+    print("3. Guess the correct answer.")
+    print("4. You have 5 attempts to guess the correct answer.")
+    print("5. If your answer is incorrect, you will receive a hint.")
+    print("6. Try to guess the correct answer!")
+
+
+def choose_category():
+    categories = {
+        "1": "Cities",
+        "2": "Countries",
+        "3": "Celebrities",
+        "4": "National dishes",
+    }
+
+    print("\nChoose a category:")
+    for number, category in categories.items():
+        print(f"{number}. {category}")
+
+    while True:
+        choice = input("Your choice: ")
+
+        if choice in categories:
+            return categories[choice]
+
+        print("Invalid choice. Please try again.")
+
+
 def get_article_sentences(article_text):
     """Splits a Wikipedia article into individual sentences."""
     sentences = re.split(r"(?<=[.!?])\s+", article_text)
