@@ -1,8 +1,10 @@
-import wikipediaapi
 import random
 import re
 
-capitals = [
+import wikipediaapi
+
+
+CAPITALS = [
     "Amsterdam",
     "Athens",
     "Berlin",
@@ -17,7 +19,7 @@ capitals = [
     "Ljubljana",
     "Luxembourg",
     "Madrid",
-    "Nikosia",
+    "Nicosia",
     "Paris",
     "Prague",
     "Riga",
@@ -29,36 +31,44 @@ capitals = [
     "Vienna",
     "Vilnius",
     "Warsaw",
-    "Zagreb"
+    "Zagreb",
 ]
 
 
-
-wiki_wiki = wikipediaapi.Wikipedia(
-    user_agent="CapitalQuiz/1.0 (annecke@gmail.com)",
-    language="en"
-)
-
+def create_wikipedia_client():
+    return wikipediaapi.Wikipedia(
+        user_agent="CapitalQuiz/1.0 (your-email@example.com)",
+        language="en",
+    )
 
 
 def redact_city(sentence, city):
     pattern = r"\b" + re.escape(city) + r"\w*"
-    return re.sub(pattern, "️XXX️", sentence, flags=re.IGNORECASE)
+    return re.sub(pattern, "XXX", sentence, flags=re.IGNORECASE)
 
-correct_answer = random.choice(capitals)
 
-page_py = wiki_wiki.page(correct_answer)
+def get_clues(city, wiki):
+    page = wiki.page(city)
+
+    if not page.exists():
+        raise ValueError(f"No Wikipedia page found for {city}.")
+
+    sentences = [
+        sentence.strip()
+        for sentence in page.text.split(". ")
+        if len(sentence.strip()) > 40
+    ]
 
 complete_content = page_py.text
 list_of_sentences = complete_content.split(". ")
 list_of_sentences = [s.strip() for s in list_of_sentences if len(s.strip()) > 40 and len(s.strip()) < 200]
 first_random_sentence = random.choice(list_of_sentences)
 first_redacted_sentence = redact_city(first_random_sentence, correct_answer)
+    if not sentences:
+        raise ValueError(f"No usable clues found for {city}.")
 
-print("Welcome to CAPITAL CLUES!\n")
+    return sentences
 
-print("Here comes the first clue:")
-print(f'"{first_redacted_sentence}"')
 
 wrong_attempts = 0
 
@@ -72,17 +82,41 @@ while True:
     guess = input("\nWhich capital are we looking for? ")
     more_random_sentences = random.choice(list_of_sentences)
     more_redacted_sentences = redact_city(more_random_sentences, correct_answer)
+def play_game():
+    wiki = create_wikipedia_client()
+    correct_answer = random.choice(CAPITALS)
+    clues = get_clues(correct_answer, wiki)
 
-    if guess.strip().lower() == correct_answer.lower():
-        print("Correct!")
-        break
-    else:
+    print("Here comes the first clue:")
+
+    first_clue = redact_city(random.choice(clues), correct_answer)
+    print(f'"{first_clue}"')
+
+    while True:
+        guess = input("\nWhich capital are we looking for? ").strip()
+
+        if guess.casefold() == correct_answer.casefold():
+            print("Correct!")
+            break
+
         print("\nWrong! Here comes another clue:")
         print(f'"{more_redacted_sentences}"')
         wrong_attempts += 1
         if wrong_attempts == 3:
             print(f"\nChoose one of these options: {options}")
+        next_clue = redact_city(random.choice(clues), correct_answer)
+        print(f'"{next_clue}"')
 
-# def main():
-#    if __name__ == "__main__":
-#     main()
+# def menu():
+#     print("\nWelcome to CAPITAL CLUES!\n")
+#     print("1. English\n2. Deutsch")
+#     language_selected = input("Please select a language: ")
+
+    play_game()
+
+def main():
+    play_game()
+
+
+if __name__ == "__main__":
+    main()
