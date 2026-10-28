@@ -59,12 +59,29 @@ def get_clues(city, wiki):
         if len(sentence.strip()) > 40
     ]
 
+complete_content = page_py.text
+list_of_sentences = complete_content.split(". ")
+list_of_sentences = [s.strip() for s in list_of_sentences if len(s.strip()) > 40 and len(s.strip()) < 200]
+first_random_sentence = random.choice(list_of_sentences)
+first_redacted_sentence = redact_city(first_random_sentence, correct_answer)
     if not sentences:
         raise ValueError(f"No usable clues found for {city}.")
 
     return sentences
 
 
+wrong_attempts = 0
+
+wrong_options = random.sample(
+    [city for city in capitals if city != correct_answer], 2
+)
+options = wrong_options + [correct_answer]
+random.shuffle(options)
+
+while True:
+    guess = input("\nWhich capital are we looking for? ")
+    more_random_sentences = random.choice(list_of_sentences)
+    more_redacted_sentences = redact_city(more_random_sentences, correct_answer)
 def play_game():
     wiki = create_wikipedia_client()
     correct_answer = random.choice(CAPITALS)
@@ -83,6 +100,10 @@ def play_game():
             break
 
         print("\nWrong! Here comes another clue:")
+        print(f'"{more_redacted_sentences}"')
+        wrong_attempts += 1
+        if wrong_attempts == 3:
+            print(f"\nChoose one of these options: {options}")
         next_clue = redact_city(random.choice(clues), correct_answer)
         print(f'"{next_clue}"')
 
