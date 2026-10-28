@@ -1,8 +1,7 @@
 import random
 import re
-
 import wikipediaapi
-import re
+
 
 from storage.game_logic import check_answer
 
@@ -83,6 +82,7 @@ def play_round():
         print("Incorrect! Here is a new hint:")
         print(page.summary)
 
+
 # Schlüssel: englischer Name, Wert: deutscher Name
 CAPITALS = {
     "Amsterdam": "Amsterdam",
@@ -113,6 +113,7 @@ CAPITALS = {
     "Warsaw": "Warschau",
     "Zagreb": "Zagreb",
 }
+
 
 TEXTS = {
     "en": {
@@ -162,11 +163,18 @@ def get_clues(city, wiki, texts):
         if len(sentence.strip()) > 40
     ]
 
-complete_content = page_py.text
-list_of_sentences = complete_content.split(". ")
-list_of_sentences = [s.strip() for s in list_of_sentences if len(s.strip()) > 40 and len(s.strip()) < 200]
-first_random_sentence = random.choice(list_of_sentences)
-first_redacted_sentence = redact_city(first_random_sentence, correct_answer)
+## complete_content = page_py.text
+## list_of_sentences = complete_content.split(". ")
+## list_of_sentences = [s.strip() for s in list_of_sentences if len(s.strip()) > 40 and len(s.strip()) < 200]
+## first_random_sentence = random.choice(list_of_sentences)
+## first_redacted_sentence = redact_city(first_random_sentence, correct_answer)
+
+    # Korrigierter Abschnitt: vorhandene Sätze weiterverwenden
+    sentences = [
+        sentence for sentence in sentences
+        if len(sentence) < 200
+    ]
+
     if not sentences:
         raise ValueError(f"{texts['clue_error']} {city}.")
 
@@ -175,50 +183,67 @@ first_redacted_sentence = redact_city(first_random_sentence, correct_answer)
 
 def play_game(language):
     texts = TEXTS[language]
-    wiki = create_wikipedia_client(language)
-wrong_attempts = 0
+##     wiki = create_wikipedia_client(language)
+## wrong_attempts = 0
+##
+## wrong_options = random.sample(
+##     [city for city in capitals if city != correct_answer], 2
+## )
+## options = wrong_options + [correct_answer]
+## random.shuffle(options)
+##
+## while True:
+##     guess = input("\nWhich capital are we looking for? ")
+##     more_random_sentences = random.choice(list_of_sentences)
+##     more_redacted_sentences = redact_city(more_random_sentences, correct_answer)
 
-wrong_options = random.sample(
-    [city for city in capitals if city != correct_answer], 2
-)
-options = wrong_options + [correct_answer]
-random.shuffle(options)
+## def play_game():
+##     wiki = create_wikipedia_client()
+##     correct_answer = random.choice(CAPITALS)
+##     clues = get_clues(correct_answer, wiki)
 
-while True:
-    guess = input("\nWhich capital are we looking for? ")
-    more_random_sentences = random.choice(list_of_sentences)
-    more_redacted_sentences = redact_city(more_random_sentences, correct_answer)
-def play_game():
-    wiki = create_wikipedia_client()
-    correct_answer = random.choice(CAPITALS)
-    clues = get_clues(correct_answer, wiki)
+    wiki = create_wikipedia_client("en")
 
     capital_en = random.choice(list(CAPITALS))
     correct_answer = CAPITALS[capital_en] if language == "de" else capital_en
 
-    clues = get_clues(correct_answer, wiki, texts)
+    clues = get_clues(capital_en, wiki, texts)
 
     print(f"\n{texts['welcome']}\n")
     print(texts["first_clue"])
 
-    first_clue = redact_city(random.choice(clues), correct_answer)
+    first_clue = redact_city(random.choice(clues), capital_en)
     print(f'"{first_clue}"')
 
-    while True:
+    wrong_attempts = 0
+
+    while wrong_attempts < 5:
         guess = input(texts["question"]).strip()
 
-        if guess.casefold() == correct_answer.casefold():
+        if check_answer(guess, correct_answer):
             print(texts["correct"])
             break
 
         print(f"\n{texts['wrong']}")
-        print("\nWrong! Here comes another clue:")
-        print(f'"{more_redacted_sentences}"')
+##         print("\nWrong! Here comes another clue:")
+##         print(f'"{more_redacted_sentences}"')
+
         wrong_attempts += 1
+
         if wrong_attempts == 3:
+            wrong_options = random.sample(
+                [city for city in CAPITALS.values() if city != correct_answer],
+                2,
+            )
+            options = wrong_options + [correct_answer]
+            random.shuffle(options)
             print(f"\nChoose one of these options: {options}")
-        next_clue = redact_city(random.choice(clues), correct_answer)
-        print(f'"{next_clue}"')
+
+        if wrong_attempts < 5:
+            next_clue = redact_city(random.choice(clues), capital_en)
+            print(f'"{next_clue}"')
+    else:
+        print(f"The correct answer was: {correct_answer}")
 
 
 def menu():
