@@ -4,7 +4,7 @@ import wikipediaapi
 
 
 def welcome_message():
-    print("\nWelcome to the Wikipedia Guessing Game!")
+    print("\nWelcome to Whatiki, the Wikipedia Guessing Game!")
     print("Choose a category and guess the correct answer.")
     print("Good luck!")
 
@@ -113,7 +113,7 @@ CAPITALS = {
 
 TEXTS = {
     "en": {
-        "welcome": "Welcome to Guess Whatiki!",
+        "welcome": "Welcome to Whatiki, the Wikipedia guessing Game!",
         "first_clue": "Here comes the first clue:",
         "question": "Which capital are we looking for? ",
         "correct": "Correct!",
@@ -123,7 +123,7 @@ TEXTS = {
         "clue_error": "No usable clues found for",
     },
     "de": {
-        "welcome": "Willkommen bei Guess Whatiki!",
+        "welcome": "Willkommen bei Whatiki, dem Wikipedia-Ratespiel!",
         "first_clue": "Hier kommt der erste Hinweis:",
         "question": "Welche Hauptstadt suchen wir? ",
         "correct": "Richtig!",
