@@ -170,11 +170,6 @@ def get_clues(city, wiki, texts):
         if len(sentence.strip()) > 40
     ]
 
-## complete_content = page_py.text
-## list_of_sentences = complete_content.split(". ")
-## list_of_sentences = [s.strip() for s in list_of_sentences if len(s.strip()) > 40 and len(s.strip()) < 200]
-## first_random_sentence = random.choice(list_of_sentences)
-## first_redacted_sentence = redact_city(first_random_sentence, correct_answer)
 
     # Korrigierter Abschnitt: vorhandene Sätze weiterverwenden
     sentences = [
@@ -197,24 +192,7 @@ def play_game(language):
     print("5. Try to find the correct answer!")
     print()
     texts = TEXTS[language]
-##     wiki = create_wikipedia_client(language)
-## wrong_attempts = 0
-##
-## wrong_options = random.sample(
-##     [city for city in capitals if city != correct_answer], 2
-## )
-## options = wrong_options + [correct_answer]
-## random.shuffle(options)
-##
-## while True:
-##     guess = input("\nWhich capital are we looking for? ")
-##     more_random_sentences = random.choice(list_of_sentences)
-##     more_redacted_sentences = redact_city(more_random_sentences, correct_answer)
 
-## def play_game():
-##     wiki = create_wikipedia_client()
-##     correct_answer = random.choice(CAPITALS)
-##     clues = get_clues(correct_answer, wiki)
 
     wiki = create_wikipedia_client("en")
 
@@ -241,8 +219,7 @@ def play_game(language):
             break
 
         print(f"\n{texts['wrong']}")
-##         print("\nWrong! Here comes another clue:")
-##         print(f'"{more_redacted_sentences}"')
+
 
         wrong_attempts += 1
 
