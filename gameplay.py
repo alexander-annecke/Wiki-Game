@@ -148,6 +148,11 @@ def check_answer(user_input, correct_answer):
     return user_input.strip().lower() == correct_answer.strip().lower()
 
 
+def show_attempts(attempts):
+    """Displays the number of attempts needed to find the correct answer."""
+    print(f"\nYou found the correct answer in {attempts} attempts!")
+
+
 def redact_city(sentence, city):
     pattern = r"\b" + re.escape(city) + r"\w*"
     return re.sub(pattern, "XXX", sentence, flags=re.IGNORECASE)
@@ -224,6 +229,7 @@ def play_game(language):
 
         if check_answer(guess, correct_answer):
             print(texts["correct"])
+            show_attempts(wrong_attempts + 1)
             break
 
         print(f"\n{texts['wrong']}")
