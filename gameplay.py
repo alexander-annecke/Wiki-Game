@@ -111,7 +111,6 @@ CAPITALS = {
     "Zagreb": "Zagreb",
 }
 
-
 TEXTS = {
     "en": {
         "welcome": "Welcome to Guess Whatiki!",
@@ -153,7 +152,7 @@ def show_attempts(attempts):
     print(f"\nYou found the correct answer in {attempts} attempts!")
 
 
-def redact_city(sentence, city):
+def redact_city(sentence: str, city: str):
     pattern = r"\b" + re.escape(city) + r"\w*"
     return re.sub(pattern, "XXX", sentence, flags=re.IGNORECASE)
 
@@ -169,7 +168,6 @@ def get_clues(city, wiki, texts):
         for sentence in page.text.split(". ")
         if len(sentence.strip()) > 40
     ]
-
 
     # Korrigierter Abschnitt: vorhandene Sätze weiterverwenden
     sentences = [
@@ -192,7 +190,6 @@ def play_game(language):
     print("5. Try to find the correct answer!")
     print()
     texts = TEXTS[language]
-
 
     wiki = create_wikipedia_client("en")
 
@@ -219,7 +216,6 @@ def play_game(language):
             break
 
         print(f"\n{texts['wrong']}")
-
 
         wrong_attempts += 1
 
