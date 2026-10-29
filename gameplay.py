@@ -3,9 +3,6 @@ import re
 import wikipediaapi
 
 
-from storage.game_logic import check_answer
-
-
 def welcome_message():
     print("\nWelcome to the Wikipedia Guessing Game!")
     print("Choose a category and guess the correct answer.")
@@ -144,6 +141,11 @@ def create_wikipedia_client(language):
         user_agent="CapitalQuiz/1.0 (deine-echte-email@example.com)",
         language=language,
     )
+
+
+def check_answer(user_input, correct_answer):
+    """Checks the player's answer."""
+    return user_input.strip().lower() == correct_answer.strip().lower()
 
 
 def redact_city(sentence, city):
