@@ -114,7 +114,7 @@ CAPITALS = {
 
 TEXTS = {
     "en": {
-        "welcome": "Welcome to CAPITAL CLUES!",
+        "welcome": "Welcome to Guess Whatiki!",
         "first_clue": "Here comes the first clue:",
         "question": "Which capital are we looking for? ",
         "correct": "Correct!",
@@ -124,7 +124,7 @@ TEXTS = {
         "clue_error": "No usable clues found for",
     },
     "de": {
-        "welcome": "Willkommen bei CAPITAL CLUES!",
+        "welcome": "Willkommen bei Guess Whatiki!",
         "first_clue": "Hier kommt der erste Hinweis:",
         "question": "Welche Hauptstadt suchen wir? ",
         "correct": "Richtig!",
@@ -189,6 +189,13 @@ def get_clues(city, wiki, texts):
 
 
 def play_game(language):
+    print("\nHow to play")
+    print("1. A Wikipedia article is selected at random.")
+    print("2. Guess the title of the article.")
+    print("3. You have 5 attempts to find the correct answer.")
+    print("4. If your answer is wrong, you will receive hints.")
+    print("5. Try to find the correct answer!")
+    print()
     texts = TEXTS[language]
 ##     wiki = create_wikipedia_client(language)
 ## wrong_attempts = 0
@@ -225,6 +232,7 @@ def play_game(language):
     wrong_attempts = 0
 
     while wrong_attempts < 5:
+        print()
         guess = input(texts["question"]).strip()
 
         if check_answer(guess, correct_answer):
