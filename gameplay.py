@@ -191,17 +191,19 @@ def play_game(language):
     print()
     texts = TEXTS[language]
 
-    wiki = create_wikipedia_client("en")
+    wiki = create_wikipedia_client(language)
 
     capital_en = random.choice(list(CAPITALS))
-    correct_answer = CAPITALS[capital_en] if language == "de" else capital_en
 
-    clues = get_clues(capital_en, wiki, texts)
+    article_city = CAPITALS[capital_en] if language == "de" else capital_en
+    correct_answer = article_city
+
+    clues = get_clues(article_city, wiki, texts)
 
     print(f"\n{texts['welcome']}\n")
     print(texts["first_clue"])
 
-    first_clue = redact_city(random.choice(clues), capital_en)
+    first_clue = redact_city(random.choice(clues), article_city)
     print(f'"{first_clue}"')
 
     wrong_attempts = 0
@@ -229,7 +231,7 @@ def play_game(language):
             print(f"\nChoose one of these options: {options}")
 
         if wrong_attempts < 5:
-            next_clue = redact_city(random.choice(clues), capital_en)
+            next_clue = redact_city(random.choice(clues), article_city)
             print(f'"{next_clue}"')
     else:
         print(f"The correct answer was: {correct_answer}")
