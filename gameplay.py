@@ -54,7 +54,7 @@ def get_article_sentences(article_text):
 
 def play_round():
     wiki_wiki = wikipediaapi.Wikipedia(
-        user_agent="Wiki-Game/1.0 (annecke@gmail.com)",
+        user_agent="Wiki-Game/1.0 (noreply@whatiki.example)",
         language="en",
     )
 
