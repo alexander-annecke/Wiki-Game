@@ -9,14 +9,21 @@ def welcome_message():
     print("Good luck!")
 
 
-def instructions():
-    print("\nHow to play:")
-    print("1. Choose a category.")
-    print("2. Read the sentences from the Wikipedia article sentences.")
-    print("3. Guess the correct answer.")
-    print("4. You have 5 attempts to guess the correct answer.")
-    print("5. If your answer is incorrect, you will receive a hint.")
-    print("6. Try to guess the correct answer!")
+def instructions(language):
+    if language == "en":
+        print("How to play:")
+        print("1. A Wikipedia article is selected at random.")
+        print("2. Guess the title of the article.")
+        print("3. You have 5 attempts to find the correct answer.")
+        print("4. If your answer is wrong, you will receive hints.")
+        print("5. Try to find the correct answer!")
+    else:
+        print("Spielanleitung:")
+        print("1. Ein Wikipedia-Artikel wird zufällig ausgewählt.")
+        print("2. Errate den Titel des Artikels.")
+        print("3. Du hast 5 Versuche, die richtige Antwort zu finden.")
+        print("4. Bei einer falschen Antwort erhältst du Hinweise.")
+        print("5. Versuche, die richtige Antwort zu finden!")
 
 
 def choose_category():
@@ -180,14 +187,10 @@ def get_clues(city, wiki, texts):
 
 
 def play_game(language):
-    print("\nHow to play")
-    print("1. A Wikipedia article is selected at random.")
-    print("2. Guess the title of the article.")
-    print("3. You have 5 attempts to find the correct answer.")
-    print("4. If your answer is wrong, you will receive hints.")
-    print("5. Try to find the correct answer!")
-    print()
     texts = TEXTS[language]
+
+    print(f"\n{texts['welcome']}\n")
+    instructions(language)
 
     wiki = create_wikipedia_client(language)
 
@@ -198,11 +201,8 @@ def play_game(language):
 
     clues = get_clues(article_city, wiki, texts)
 
-    print(f"\n{texts['welcome']}\n")
-    print(texts["first_clue"])
-
     first_clue = redact_city(random.choice(clues), article_city)
-    print(f'"{first_clue}"')
+    print(f'\n"{first_clue}"')
 
     wrong_attempts = 0
 
