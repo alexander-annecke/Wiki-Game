@@ -36,7 +36,7 @@ CAPITALS = {
 
 TEXTS = {
     "en": {
-        "welcome": "Welcome to Whatiki, the Wikipedia guessing Game!",
+        "welcome": "Welcome to GUESS WHATiki, the Wikipedia guessing Game!",
         "first_clue": "Here comes the first clue:",
         "question": "Which capital are we looking for? ",
         "correct": "Correct!",
@@ -47,7 +47,7 @@ TEXTS = {
         "attempts": "You found the correct answer in {attempts} attempts!",
     },
     "de": {
-        "welcome": "Willkommen bei Whatiki, dem Wikipedia-Ratespiel!",
+        "welcome": "Willkommen bei GUESS WHATiki, dem Wikipedia-Ratespiel!",
         "first_clue": "Hier kommt der erste Hinweis:",
         "question": "Welche Hauptstadt suchen wir? ",
         "correct": "Richtig!",
@@ -60,11 +60,13 @@ TEXTS = {
 }
 
 def welcome_message():
-    print("\nWelcome to Whatiki, the Wikipedia Guessing Game!")
+    """Display the game's welcome message."""
+    print("\nWelcome to GUESS WHATiki!?, the Wikipedia Guessing Game!")
     print("Good luck!")
 
 
 def instructions(language):
+    """Display the game instructions in the selected language."""
     if language == "en":
         print("How to play:")
         print("1. A Wikipedia article is selected at random.")
@@ -144,26 +146,31 @@ def instructions(language):
 
 
 def create_wikipedia_client(language):
+    """Create and return a Wikipedia client for the selected language."""
     return wikipediaapi.Wikipedia(
-        user_agent="CapitalQuiz/1.0 (deine-echte-email@example.com)",
+        user_agent="CapitalQuiz/1.0 (email@example.com)",
         language=language,
     )
 
 
 def check_answer(user_input, correct_answer):
+    """Return whether the user's answer matches the correct answer."""
     return user_input.strip().lower() == correct_answer.strip().lower()
 
 
 def show_attempts(attempts, texts):
+    """Display how many attempts the player needed."""
     print(texts["attempts"].format(attempts=attempts))
 
 
 def redact_city(sentence: str, city: str):
+    """Replace the city's name with XXX in a clue sentence."""
     pattern = r"\b" + re.escape(city) + r"\w*"
     return re.sub(pattern, "XXX", sentence, flags=re.IGNORECASE)
 
 
 def get_clues(city, wiki, texts):
+    """Fetch and return usable clue sentences for a city."""
     page = wiki.page(city)
 
     if not page.exists():
@@ -188,6 +195,7 @@ def get_clues(city, wiki, texts):
 
 
 def play_game(language):
+    """Run one complete game in the selected language."""
     texts = TEXTS[language]
 
     print(f"\n{texts['welcome']}\n")
@@ -237,6 +245,7 @@ def play_game(language):
 
 
 def menu():
+    """Ask the player to select a language and start the game."""
     print("\n1. English\n2. Deutsch")
     choice = input("Please select a language / Bitte Sprache wählen: ").strip()
 
@@ -249,6 +258,7 @@ def menu():
 
 
 def main():
+    """Display the welcome message and start the language menu."""
     welcome_message()
     menu()
 
