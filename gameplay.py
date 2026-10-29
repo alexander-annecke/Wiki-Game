@@ -41,13 +41,11 @@ def choose_category():
 
 
 def get_article_sentences(article_text):
-    """Splits a Wikipedia article into individual sentences."""
     sentences = re.split(r"(?<=[.!?])\s+", article_text)
     return [sentence.strip() for sentence in sentences if sentence.strip()]
 
 
 def play_round():
-    """Runs one round of the Wikipedia guessing game."""
     wiki_wiki = wikipediaapi.Wikipedia(
         user_agent="Wiki-Game/1.0 (annecke@gmail.com)",
         language="en",
@@ -121,6 +119,7 @@ TEXTS = {
         "invalid_language": "Invalid selection. Please choose 1 or 2.",
         "page_error": "No Wikipedia page found for",
         "clue_error": "No usable clues found for",
+        "attempts": "You found the correct answer in {attempts} attempts!",
     },
     "de": {
         "welcome": "Willkommen bei Whatiki, dem Wikipedia-Ratespiel!",
@@ -131,6 +130,7 @@ TEXTS = {
         "invalid_language": "Ungültige Auswahl. Bitte wähle 1 oder 2.",
         "page_error": "Keine Wikipedia-Seite gefunden für",
         "clue_error": "Keine passenden Hinweise gefunden für",
+        "attempts": "Du hast die richtige Antwort in {attempts} Versuchen gefunden!",
     },
 }
 
@@ -143,13 +143,11 @@ def create_wikipedia_client(language):
 
 
 def check_answer(user_input, correct_answer):
-    """Checks the player's answer."""
     return user_input.strip().lower() == correct_answer.strip().lower()
 
 
-def show_attempts(attempts):
-    """Displays the number of attempts needed to find the correct answer."""
-    print(f"\nYou found the correct answer in {attempts} attempts!")
+def show_attempts(attempts, texts):
+    print(texts["attempts"].format(attempts=attempts))
 
 
 def redact_city(sentence: str, city: str):
@@ -214,7 +212,7 @@ def play_game(language):
 
         if check_answer(guess, correct_answer):
             print(texts["correct"])
-            show_attempts(wrong_attempts + 1)
+            show_attempts(wrong_attempts + 1, texts)
             break
 
         print(f"\n{texts['wrong']}")
