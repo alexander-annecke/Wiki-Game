@@ -1,23 +1,11 @@
-Hackathon – 26.10.2026
+# GUESS WHATiki!?
 
-GUESS WHATiki!? ist ein Python-Spiel, bei dem Spieler anhand von Hinweisen aus einem Artikel den gesuchten Inhalt erraten.
+**GUESS WHATiki!?** is a terminal-based trivia game where players have to guess a hidden answer based on clues taken from Wikipedia articles.
 
-Geplante Funktionen
+At the beginning, players can choose between English and German. The game then displays sentences from a Wikipedia article, with the target name automatically redacted if it appears in the text. Players try to identify the correct answer using as few clues as possible.
 
-Spielanleitung anzeigen
+After three incorrect guesses, the game provides a multiple-choice option with three possible answers, including the correct one.
 
-Spielkategorien anzeigen und auswählen
+The first available category is **European Capitals**, with the goal of expanding the game to include more categories in the future.
 
-Spiel starten
-
-Zufälligen Satz aus einem Artikel abrufen
-
-Eindeutige Hinweise unkenntlich machen
-
-Eingabe des Spielers prüfen
-
-Bei falscher Antwort weitere Versuche ermöglichen
-
-Spielergebnis anzeigen
-
-Fragen, ob weitergespielt werden soll
+**Technologies:** Python, Wikipedia API, Regular Expressions
