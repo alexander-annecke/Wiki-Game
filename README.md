@@ -1,8 +1,6 @@
-Walksthrow
-
 Hackathon – 26.10.2026
 
-Walksthrow ist ein Python-Spiel, bei dem Spieler anhand von Hinweisen aus einem Artikel den gesuchten Inhalt erraten.
+GUESS WHATiki!? ist ein Python-Spiel, bei dem Spieler anhand von Hinweisen aus einem Artikel den gesuchten Inhalt erraten.
 
 Geplante Funktionen
 
